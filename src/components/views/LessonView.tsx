@@ -47,6 +47,7 @@ export default function LessonView() {
     addXp,
     completeLesson,
     resetLesson,
+    updateProgress,
   } = useLessonStore();
 
   const { gamification, spendHearts, addXp: addAuthXp, addCoins } = useAuthStore();
@@ -132,10 +133,15 @@ export default function LessonView() {
 
         if (cancelled) return;
 
-        const lesson = data.lesson;
+        // API returns flat: { id, title, ..., sections: [{ vocabulary: [...], exercises: [...] }] }
+        const lesson = data;
         const sections: Section[] = data.sections ?? [];
-        const exercises: Exercise[] = data.exercises ?? [];
-        const vocabulary: Vocabulary[] = data.vocabulary ?? [];
+        const exercises: Exercise[] = sections.flatMap(
+          (s: Section & { exercises?: Exercise[] }) => s.exercises ?? []
+        );
+        const vocabulary: Vocabulary[] = sections.flatMap(
+          (s: Section & { vocabulary?: Vocabulary[] }) => s.vocabulary ?? []
+        );
 
         setCurrentLesson(lesson);
         setCurrentSections(sections);
@@ -255,9 +261,18 @@ export default function LessonView() {
     addAuthXp(xpEarned);
     addCoins(Math.floor(xpEarned / 10));
 
+    // Update local progress map immediately
+    const lessonId = viewParams.lessonId;
+    if (lessonId) {
+      updateProgress(lessonId, {
+        completed: true,
+        score,
+        completedAt: new Date().toISOString(),
+      });
+    }
+
     // POST progress to API
     try {
-      const lessonId = viewParams.lessonId;
       if (lessonId) {
         await fetch('/api/progress', {
           method: 'POST',
@@ -272,7 +287,7 @@ export default function LessonView() {
     } catch {
       // Silent fail for progress reporting
     }
-  }, [totalExerciseCount, exerciseAnswers, xpEarned, viewParams.lessonId, completeLesson, addAuthXp, addCoins]);
+  }, [totalExerciseCount, exerciseAnswers, xpEarned, viewParams.lessonId, completeLesson, addAuthXp, addCoins, updateProgress]);
 
   const handleClose = useCallback(() => {
     if (advanceTimerRef.current) {
