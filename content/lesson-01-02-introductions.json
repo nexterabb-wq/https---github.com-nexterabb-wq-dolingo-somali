@@ -1,0 +1,138 @@
+{
+  "id": "lesson-01-02",
+  "unitId": "unit-01",
+  "title": "Introducing Yourself",
+  "description": "Learn how to introduce yourself and ask someone's name.",
+  "type": "lesson",
+  "xpReward": 15,
+  "sortOrder": 2,
+  "status": "published",
+  "contentSource": "linguist",
+  "sections": [
+    {
+      "id": "sec-01-02-vocab",
+      "lessonId": "lesson-01-02",
+      "title": "Introduction Phrases",
+      "type": "vocabulary",
+      "sortOrder": 1,
+      "vocabulary": [
+        {
+          "id": "vocab-07",
+          "sectionId": "sec-01-02-vocab",
+          "english": "My name is",
+          "somali": "Magacaygu waa",
+          "pronunciationGuide": "my NAY-m iz",
+          "partOfSpeech": "phrase",
+          "difficulty": "beginner",
+          "exampleSentence": "My name is Ahmed.",
+          "exampleTranslation": "Magacaygu waa Axmed.",
+          "grammarNotes": "Used to introduce yourself. Literally: 'My name is...'",
+          "tags": ["introduction", "basic"]
+        },
+        {
+          "id": "vocab-08",
+          "sectionId": "sec-01-02-vocab",
+          "english": "What is your name?",
+          "somali": "Magacaaga waa?",
+          "pronunciationGuide": "wut iz yor NAYM",
+          "partOfSpeech": "phrase",
+          "difficulty": "beginner",
+          "exampleSentence": "What is your name?",
+          "exampleTranslation": "Magacaaga waa?",
+          "grammarNotes": "A question to ask someone's name.",
+          "tags": ["introduction", "question"]
+        },
+        {
+          "id": "vocab-09",
+          "sectionId": "sec-01-02-vocab",
+          "english": "Nice to meet you",
+          "somali": "Waan ku faraxsanahay inaan kula qabto",
+          "pronunciationGuide": "nys tuh MEET yoo",
+          "partOfSpeech": "phrase",
+          "difficulty": "beginner",
+          "exampleSentence": "Nice to meet you, Fatima!",
+          "exampleTranslation": "Waan ku faraxsanahay inaan kula qabto, Faadumo!",
+          "grammarNotes": "Used after learning someone's name. Short form: 'Nice to meet you'.",
+          "tags": ["introduction", "polite"]
+        },
+        {
+          "id": "vocab-10",
+          "sectionId": "sec-01-02-vocab",
+          "english": "I am from",
+          "somali": "Waan ka imaanahay",
+          "pronunciationGuide": "EYE am from",
+          "partOfSpeech": "phrase",
+          "difficulty": "beginner",
+          "exampleSentence": "I am from Mogadishu.",
+          "exampleTranslation": "Waan ka imaanahay Muqdisho.",
+          "grammarNotes": "Used to state your origin.",
+          "tags": ["introduction", "origin"]
+        }
+      ]
+    },
+    {
+      "id": "sec-01-02-exercises",
+      "lessonId": "lesson-01-02",
+      "title": "Practice Introductions",
+      "type": "exercise",
+      "sortOrder": 2,
+      "exercises": [
+        {
+          "id": "ex-02-01",
+          "sectionId": "sec-01-02-exercises",
+          "exerciseType": "multiple_choice",
+          "config": {
+            "question": "How do you ask someone's name in English?",
+            "somaliPrompt": "Sideed u weyddiin kartaa magaca qofka Ingiriisga?",
+            "options": ["What is your name?", "My name is", "Nice to meet you", "How old are you?"],
+            "correctIndex": 0,
+            "explanation": "'What is your name?' is the correct way to ask someone's name."
+          },
+          "xpReward": 5,
+          "sortOrder": 1
+        },
+        {
+          "id": "ex-02-02",
+          "sectionId": "sec-01-02-exercises",
+          "exerciseType": "fill_blank",
+          "config": {
+            "sentence": "_____ Ahmed. Nice to meet you!",
+            "answer": "My name is",
+            "somaliTranslation": "_____ Axmed. Waan ku faraxsanahay!",
+            "hint": "Introduce yourself",
+            "options": ["My name is", "What is", "I am from", "Nice to"]
+          },
+          "xpReward": 5,
+          "sortOrder": 2
+        },
+        {
+          "id": "ex-02-03",
+          "sectionId": "sec-01-02-exercises",
+          "exerciseType": "typing",
+          "config": {
+            "prompt": "Type 'My name is' in English",
+            "somaliPrompt": "Ku qor 'Magacaygu waa' af Ingiriis",
+            "answer": "my name is",
+            "hint": "Used to introduce yourself",
+            "acceptPartial": false
+          },
+          "xpReward": 5,
+          "sortOrder": 3
+        },
+        {
+          "id": "ex-02-04",
+          "sectionId": "sec-01-02-exercises",
+          "exerciseType": "sentence_ordering",
+          "config": {
+            "words": ["name", "My", "is", "Ahmed"],
+            "correctOrder": [1, 0, 2, 3],
+            "translation": "Magacaygu waa Axmed",
+            "somaliTranslation": "Magacaygu waa Axmed"
+          },
+          "xpReward": 5,
+          "sortOrder": 4
+        }
+      ]
+    }
+  ]
+}

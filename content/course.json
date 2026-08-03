@@ -1,0 +1,11 @@
+{   "id": "course-eng-so-001",
+  "title": "English for Somali Speakers",
+  "description": "Learn English from scratch with lessons designed specifically for Somali speakers. Build vocabulary, grammar, and confidence step by step.",
+  "coverImage": null,
+  "language": "en",
+  "sourceLang": "so",
+  "difficulty": "beginner",
+  "sortOrder": 1,
+  "status": "published",
+  "contentSource": "linguist"
+}

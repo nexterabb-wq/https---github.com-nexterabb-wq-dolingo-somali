@@ -1,0 +1,100 @@
+{
+  "id": "lesson-01-03",
+  "unitId": "unit-01",
+  "title": "Numbers 1-10",
+  "description": "Learn to count from one to ten in English.",
+  "type": "lesson",
+  "xpReward": 15,
+  "sortOrder": 3,
+  "status": "published",
+  "contentSource": "linguist",
+  "sections": [
+    {
+      "id": "sec-01-03-vocab",
+      "lessonId": "lesson-01-03",
+      "title": "Numbers",
+      "type": "vocabulary",
+      "sortOrder": 1,
+      "vocabulary": [
+        { "id": "vocab-11", "sectionId": "sec-01-03-vocab", "english": "One", "somali": "Kow", "pronunciationGuide": "wun", "partOfSpeech": "number", "difficulty": "beginner", "exampleSentence": "I have one book.", "exampleTranslation": "Waxaa ii leedahay buug kow.", "tags": ["number"] },
+        { "id": "vocab-12", "sectionId": "sec-01-03-vocab", "english": "Two", "somali": "Labo", "pronunciationGuide": "too", "partOfSpeech": "number", "difficulty": "beginner", "exampleSentence": "She has two children.", "exampleTranslation": "Waxay leedahay laba carruur.", "tags": ["number"] },
+        { "id": "vocab-13", "sectionId": "sec-01-03-vocab", "english": "Three", "somali": "Saddex", "pronunciationGuide": "three", "partOfSpeech": "number", "difficulty": "beginner", "exampleSentence": "There are three rooms.", "exampleTranslation": "Waa jira saddex qol.", "tags": ["number"] },
+        { "id": "vocab-14", "sectionId": "sec-01-03-vocab", "english": "Four", "somali": "Afar", "pronunciationGuide": "for", "partOfSpeech": "number", "difficulty": "beginner", "exampleSentence": "Four people came.", "exampleTranslation": "Afar qof ayaa yimaadeen.", "tags": ["number"] },
+        { "id": "vocab-15", "sectionId": "sec-01-03-vocab", "english": "Five", "somali": "Shan", "pronunciationGuide": "fayv", "partOfSpeech": "number", "difficulty": "beginner", "exampleSentence": "I need five minutes.", "exampleTranslation": "Waan u baahanahay shan daqiiqo.", "tags": ["number"] },
+        { "id": "vocab-16", "sectionId": "sec-01-03-vocab", "english": "Six", "somali": "Lix", "pronunciationGuide": "siks", "partOfSpeech": "number", "difficulty": "beginner", "exampleSentence": "He is six years old.", "exampleTranslation": "Wuu ka jiraan lix sano.", "tags": ["number"] },
+        { "id": "vocab-17", "sectionId": "sec-01-03-vocab", "english": "Seven", "somali": "Todoba", "pronunciationGuide": "SEV-en", "partOfSpeech": "number", "difficulty": "beginner", "exampleSentence": "Seven days in a week.", "exampleTranslation": "Todoba maalmood toddobaadka.", "tags": ["number"] },
+        { "id": "vocab-18", "sectionId": "sec-01-03-vocab", "english": "Eight", "somali": "Siddeed", "pronunciationGuide": "ayt", "partOfSpeech": "number", "difficulty": "beginner", "exampleSentence": "I have eight brothers.", "exampleTranslation": "Waxaa leeyahay siddeed walaal.", "tags": ["number"] },
+        { "id": "vocab-19", "sectionId": "sec-01-03-vocab", "english": "Nine", "somali": "Sagaal", "pronunciationGuide": "nayn", "partOfSpeech": "number", "difficulty": "beginner", "exampleSentence": "Nine students are here.", "exampleTranslation": "Sagaal arday ayaa halkan.", "tags": ["number"] },
+        { "id": "vocab-20", "sectionId": "sec-01-03-vocab", "english": "Ten", "somali": "Toban", "pronunciationGuide": "ten", "partOfSpeech": "number", "difficulty": "beginner", "exampleSentence": "Ten people attended.", "exampleTranslation": "Toban qof ayaa ka qaatay.", "tags": ["number"] }
+      ]
+    },
+    {
+      "id": "sec-01-03-exercises",
+      "lessonId": "lesson-01-03",
+      "title": "Practice Numbers",
+      "type": "exercise",
+      "sortOrder": 2,
+      "exercises": [
+        {
+          "id": "ex-03-01",
+          "sectionId": "sec-01-03-exercises",
+          "exerciseType": "multiple_choice",
+          "config": {
+            "question": "What is 'Labo' in English?",
+            "somaliPrompt": "'Labo' waa maxay Ingiriisga?",
+            "options": ["One", "Two", "Three", "Four"],
+            "correctIndex": 1,
+            "explanation": "Labo means Two."
+          },
+          "xpReward": 5,
+          "sortOrder": 1
+        },
+        {
+          "id": "ex-03-02",
+          "sectionId": "sec-01-03-exercises",
+          "exerciseType": "match_word",
+          "config": {
+            "pairs": [
+              { "english": "One", "somali": "Kow" },
+              { "english": "Three", "somali": "Saddex" },
+              { "english": "Five", "somali": "Shan" },
+              { "english": "Seven", "somali": "Todoba" },
+              { "english": "Ten", "somali": "Toban" }
+            ],
+            "instruction": "Match the English numbers with their Somali translations"
+          },
+          "xpReward": 10,
+          "sortOrder": 2
+        },
+        {
+          "id": "ex-03-03",
+          "sectionId": "sec-01-03-exercises",
+          "exerciseType": "fill_blank",
+          "config": {
+            "sentence": "I have _____ books.",
+            "answer": "three",
+            "somaliTranslation": "Waxaa ii leeyahay _____ buug.",
+            "hint": "Saddex",
+            "options": ["three", "two", "five", "ten"]
+          },
+          "xpReward": 5,
+          "sortOrder": 3
+        },
+        {
+          "id": "ex-03-04",
+          "sectionId": "sec-01-03-exercises",
+          "exerciseType": "typing",
+          "config": {
+            "prompt": "Type the English word for 'Shan'",
+            "somaliPrompt": "Ku qor ereyga Ingiriiska ee 'Shan'",
+            "answer": "five",
+            "hint": "It comes after four",
+            "acceptPartial": false
+          },
+          "xpReward": 5,
+          "sortOrder": 4
+        }
+      ]
+    }
+  ]
+}

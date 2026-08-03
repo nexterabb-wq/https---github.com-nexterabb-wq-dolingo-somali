@@ -1,0 +1,182 @@
+{
+  "id": "lesson-01-01",
+  "unitId": "unit-01",
+  "title": "Hello & Goodbye",
+  "description": "Learn basic greetings and farewells in English.",
+  "type": "lesson",
+  "xpReward": 10,
+  "sortOrder": 1,
+  "status": "published",
+  "contentSource": "linguist",
+  "sections": [
+    {
+      "id": "sec-01-01-vocab",
+      "lessonId": "lesson-01-01",
+      "title": "Common Greetings",
+      "type": "vocabulary",
+      "sortOrder": 1,
+      "vocabulary": [
+        {
+          "id": "vocab-01",
+          "sectionId": "sec-01-01-vocab",
+          "english": "Hello",
+          "somali": "Salaan",
+          "pronunciationGuide": "huh-LOH",
+          "partOfSpeech": "interjection",
+          "difficulty": "beginner",
+          "exampleSentence": "Hello, how are you?",
+          "exampleTranslation": "Salaan, sidee tahay?",
+          "grammarNotes": "Used as a general greeting at any time of day.",
+          "tags": ["greeting", "basic"]
+        },
+        {
+          "id": "vocab-02",
+          "sectionId": "sec-01-01-vocab",
+          "english": "Good morning",
+          "somali": "Subax wanaagsan",
+          "pronunciationGuide": "good MOR-ning",
+          "partOfSpeech": "phrase",
+          "difficulty": "beginner",
+          "exampleSentence": "Good morning, teacher!",
+          "exampleTranslation": "Subax wanaagsan, macalin!",
+          "grammarNotes": "Used in the morning until around noon.",
+          "tags": ["greeting", "time"]
+        },
+        {
+          "id": "vocab-03",
+          "sectionId": "sec-01-01-vocab",
+          "english": "Good evening",
+          "somali": "Galab wanaagsan",
+          "pronunciationGuide": "good EEV-ning",
+          "partOfSpeech": "phrase",
+          "difficulty": "beginner",
+          "exampleSentence": "Good evening, everyone.",
+          "exampleTranslation": "Galab wanaagsan, dadka oo dhan.",
+          "grammarNotes": "Used in the evening, typically after 5 PM.",
+          "tags": ["greeting", "time"]
+        },
+        {
+          "id": "vocab-04",
+          "sectionId": "sec-01-01-vocab",
+          "english": "Goodbye",
+          "somali": "Nabadgelyo",
+          "pronunciationGuide": "good-BYE",
+          "partOfSpeech": "interjection",
+          "difficulty": "beginner",
+          "exampleSentence": "Goodbye, see you tomorrow!",
+          "exampleTranslation": "Nabadgelyo, berri is arki!",
+          "grammarNotes": "A general farewell. Also: 'See you later' = 'Hadii aad is arki lahayd'",
+          "tags": ["farewell", "basic"]
+        },
+        {
+          "id": "vocab-05",
+          "sectionId": "sec-01-01-vocab",
+          "english": "Thank you",
+          "somali": "Mahadsanid",
+          "pronunciationGuide": "THANGK yoo",
+          "partOfSpeech": "phrase",
+          "difficulty": "beginner",
+          "exampleSentence": "Thank you for your help.",
+          "exampleTranslation": "Mahadsanid caawimaadkaaga.",
+          "grammarNotes": "Essential polite expression. Short form: 'Thanks' = 'Mahadsan'",
+          "tags": ["polite", "basic"]
+        },
+        {
+          "id": "vocab-06",
+          "sectionId": "sec-01-01-vocab",
+          "english": "Please",
+          "somali": "Fadlan",
+          "pronunciationGuide": "PLEEZ",
+          "partOfSpeech": "adverb",
+          "difficulty": "beginner",
+          "exampleSentence": "Water, please.",
+          "exampleTranslation": "Biyo, fadlan.",
+          "grammarNotes": "Used to make requests polite.",
+          "tags": ["polite", "basic"]
+        }
+      ]
+    },
+    {
+      "id": "sec-01-01-exercises",
+      "lessonId": "lesson-01-01",
+      "title": "Practice Greetings",
+      "type": "exercise",
+      "sortOrder": 2,
+      "exercises": [
+        {
+          "id": "ex-01-01",
+          "sectionId": "sec-01-01-exercises",
+          "exerciseType": "multiple_choice",
+          "config": {
+            "question": "How do you say 'Salaan' in English?",
+            "somaliPrompt": "Soo jeediyaa 'Salaan' af Ingiriis?",
+            "options": ["Hello", "Goodbye", "Thank you", "Please"],
+            "correctIndex": 0,
+            "explanation": "'Salaan' is the Somali word for 'Hello', used as a general greeting."
+          },
+          "xpReward": 5,
+          "sortOrder": 1
+        },
+        {
+          "id": "ex-01-02",
+          "sectionId": "sec-01-01-exercises",
+          "exerciseType": "multiple_choice",
+          "config": {
+            "question": "What does 'Good morning' mean in Somali?",
+            "somaliPrompt": "'Good morning' waxay u dhigantaa maxay Soomaaliga?",
+            "options": ["Galab wanaagsan", "Subax wanaagsan", "Habeen wanaagsan", "Fiid wanaagsan"],
+            "correctIndex": 1,
+            "explanation": "'Subax wanaagsan' means 'Good morning' in Somali."
+          },
+          "xpReward": 5,
+          "sortOrder": 2
+        },
+        {
+          "id": "ex-01-03",
+          "sectionId": "sec-01-01-exercises",
+          "exerciseType": "fill_blank",
+          "config": {
+            "sentence": "_____, how are you?",
+            "answer": "Hello",
+            "somaliTranslation": "_____, sidee tahay?",
+            "hint": "A common greeting",
+            "options": ["Hello", "Goodbye", "Please", "Thanks"]
+          },
+          "xpReward": 5,
+          "sortOrder": 3
+        },
+        {
+          "id": "ex-01-04",
+          "sectionId": "sec-01-01-exercises",
+          "exerciseType": "translation",
+          "config": {
+            "sourceText": "Mahadsanid",
+            "sourceLang": "so",
+            "targetLang": "en",
+            "answer": "Thank you",
+            "options": ["Thank you", "Please", "Hello", "Sorry"],
+            "hint": "A polite expression of gratitude"
+          },
+          "xpReward": 5,
+          "sortOrder": 4
+        },
+        {
+          "id": "ex-01-05",
+          "sectionId": "sec-01-01-exercises",
+          "exerciseType": "match_word",
+          "config": {
+            "pairs": [
+              { "english": "Hello", "somali": "Salaan" },
+              { "english": "Goodbye", "somali": "Nabadgelyo" },
+              { "english": "Thank you", "somali": "Mahadsanid" },
+              { "english": "Please", "somali": "Fadlan" }
+            ],
+            "instruction": "Match the English words with their Somali translations"
+          },
+          "xpReward": 10,
+          "sortOrder": 5
+        }
+      ]
+    }
+  ]
+}
