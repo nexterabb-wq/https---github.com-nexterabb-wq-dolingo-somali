@@ -74,9 +74,7 @@ async function main() {
     const { sections, ...lessonFields } = lessonData;
 
     const lessonStatus = resolveStatus(lessonFields);
-    // Lesson model doesn't have contentSource — strip it
-    const { contentSource: _lessonCS, ...lessonClean } = lessonFields;
-    const lesson = { ...lessonClean, status: lessonStatus };
+    const lesson = { ...lessonFields, status: lessonStatus };
     await prisma.lesson.upsert({
       where: { id: lesson.id },
       update: lesson,

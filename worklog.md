@@ -61,3 +61,26 @@ Stage Summary:
 - Unit 2 content pipeline working: AI-generated content enters as pending_review, visible in review queue
 - Content workflow verified: draft → pending_review → published (approve) / draft (reject)
 - Existing published content (Unit 1) was not modified
+
+---
+Task ID: 3
+Agent: Super Z (main)
+Task: Pre-task confirmations + useTTS voice preloading fix + seed script contentSource bug fix + browser verification of all 3 checks
+
+Work Log:
+- Confirmed 'force published' fix is scoped to seed script only — no schema/API/status logic was changed
+- Confirmed PROJECT_ROADMAP.md did NOT exist — created it with PostgreSQL migration blocker entry
+- Found and fixed seed script bug: Lesson model HAS contentSource column but seed script was stripping it (wrong comment said 'Lesson model doesn't have contentSource'), causing Unit 2 lessons to get default 'human' instead of 'ai'
+- Fixed useTTS hook: added useVoicesReady() helper that listens for 'voiceschanged' event to pre-load voices (fixes Chrome empty getVoices() on first call)
+- Re-seeded after fix: all 3 Unit 2 lessons now correctly show contentSource: 'ai'
+- Browser verification (3 checks):
+  - CHECK 1 (Learn page): Unit 2 'Family & People' shows 0 lessons — PASS
+  - CHECK 2 (ReviewView): 3 lessons + 17 vocab + 12 exercises all pending_review with 'AI' badge — PASS
+  - CHECK 3 (TTS): speak() called correctly with right text, no app errors; headless Chromium can't synthesize audio (synthesis-failed) — code path verified correct, needs real browser for audio output
+- API verification: GET /api/courses returns Unit 2 with 0 lessons; GET /api/review returns 32 pending items with contentSource 'ai'
+
+Stage Summary:
+- Seed script contentSource strip bug fixed — lessons now preserve 'ai' from JSON
+- useTTS voice preloading fix for Chrome compatibility
+- All 3 verification checks passed (Check 3 code-correct, environment-limited)
+- PROJECT_ROADMAP.md created with PostgreSQL migration blocker documented
