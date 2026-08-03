@@ -9,7 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useNavigationStore } from '@/stores/navigation-store';
 import { useAuthStore } from '@/stores/auth-store';
 import { useLessonStore } from '@/stores/lesson-store';
-import { signOut } from 'next-auth/react';
+
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 
@@ -71,11 +71,13 @@ export default function ProfileView() {
 
   async function handleSignOut() {
     try {
-      await signOut({ redirect: false });
+      await fetch('/api/auth/signout', { method: 'POST' });
       useAuthStore.getState().logout();
       navigate('landing');
     } catch {
-      toast.error('Failed to sign out');
+      // Clear local state regardless
+      useAuthStore.getState().logout();
+      navigate('landing');
     }
   }
 

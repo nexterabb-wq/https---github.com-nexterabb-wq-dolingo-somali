@@ -6,7 +6,7 @@ import { z } from 'zod/v4';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Loader2, Mail, Lock } from 'lucide-react';
-import { signIn } from 'next-auth/react';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -48,27 +48,39 @@ export default function LoginView() {
     setIsSubmitting(true);
 
     try {
-      const result = await signIn('credentials', {
-        email: data.email,
-        password: data.password,
-        redirect: false,
+      // Get CSRF token first
+      const csrfRes = await fetch('/api/auth/csrf');
+      const csrfData = await csrfRes.json();
+      const csrfToken = csrfData?.csrfToken;
+
+      // Sign in via NextAuth credentials endpoint
+      const res = await fetch('/api/auth/callback/credentials', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          email: data.email,
+          password: data.password,
+          csrfToken: csrfToken || '',
+        }),
       });
 
-      if (result?.error) {
-        setError('Invalid email or password. Please try again.');
-        return;
-      }
+      // Fetch the session to confirm login
+      const sessionRes = await fetch('/api/auth/session');
+      const sessionData = await sessionRes.json();
 
-      // Set user in auth store after successful login
-      if (result?.ok) {
+      if (sessionData?.user) {
         setUser({
-          id: '',
-          email: data.email,
-          name: null,
-          image: null,
-          role: 'user',
+          id: sessionData.user.id || '',
+          email: sessionData.user.email || data.email,
+          name: sessionData.user.name || null,
+          image: sessionData.user.image || null,
+          role: sessionData.user.role || 'learner',
         });
         navigate('dashboard');
+      } else {
+        setError('Invalid email or password. Please try again.');
       }
     } catch {
       setError('Something went wrong. Please try again later.');

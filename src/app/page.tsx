@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { SessionProvider } from 'next-auth/react';
+
 import { ThemeProvider } from 'next-themes';
 
 // Views
@@ -155,9 +155,7 @@ function AppContent() {
 export default function Home() {
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-      <SessionProvider>
-        <AppContent />
-      </SessionProvider>
+      <AppContent />
     </ThemeProvider>
   );
 }

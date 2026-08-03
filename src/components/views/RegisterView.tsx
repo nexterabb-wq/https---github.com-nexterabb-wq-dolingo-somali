@@ -6,7 +6,7 @@ import { z } from 'zod/v4';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Loader2, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
-import { signIn } from 'next-auth/react';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -68,25 +68,39 @@ export default function RegisterView() {
       }
 
       // Auto sign-in after successful registration
-      const result = await signIn('credentials', {
-        email: data.email,
-        password: data.password,
-        redirect: false,
-      });
+      try {
+        const csrfRes = await fetch('/api/auth/csrf');
+        const csrfData = await csrfRes.json();
+        const csrfToken = csrfData?.csrfToken;
 
-      if (result?.ok) {
-        setUser({
-          id: '',
-          email: data.email,
-          name: data.name || null,
-          image: null,
-          role: 'user',
+        const loginRes = await fetch('/api/auth/callback/credentials', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            email: data.email,
+            password: data.password,
+            csrfToken: csrfToken || '',
+          }),
         });
-        navigate('dashboard');
-      } else {
-        // Registration succeeded but auto-login failed — send to login page
-        navigate('login');
+
+        const sessionRes = await fetch('/api/auth/session');
+        const sessionData = await sessionRes.json();
+
+        if (sessionData?.user) {
+          setUser({
+            id: sessionData.user.id || '',
+            email: sessionData.user.email || data.email,
+            name: sessionData.user.name || data.name || null,
+            image: sessionData.user.image || null,
+            role: sessionData.user.role || 'learner',
+          });
+          navigate('dashboard');
+          return;
+        }
+      } catch {
+        // Auto-login failed, fall through to login page
       }
+      navigate('login');
     } catch {
       setError('Something went wrong. Please try again later.');
     } finally {
