@@ -2,7 +2,8 @@
 
 import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Heart, Flame, Star, Trophy, ArrowRight, Volume2 } from 'lucide-react';
+import { X, Heart, Flame, Star, Trophy, ArrowRight, Volume2, VolumeX } from 'lucide-react';
+import { useTTS } from '@/hooks/useTTS';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -172,6 +173,8 @@ export default function LessonView() {
       if (advanceTimerRef.current) {
         clearTimeout(advanceTimerRef.current);
       }
+      vocabTTS.stop();
+      sentenceTTS.stop();
     };
   }, []);
 
@@ -303,13 +306,26 @@ export default function LessonView() {
     navigate('dashboard');
   }, [resetLesson, navigate]);
 
-  // Current vocabulary card data
+  // Current vocabulary card data (computed before TTS hooks)
   const sectionVocab = useMemo(() => {
     if (!isVocabSection || !currentSection) return [];
     return allVocabulary.filter((v) => v.sectionId === currentSection.id);
   }, [isVocabSection, currentSection, allVocabulary]);
 
   const currentVocab = sectionVocab[currentVocabIndex] ?? null;
+
+  // TTS for current vocabulary word (after currentVocab is available)
+  const vocabTTS = useTTS({
+    audioUrl: currentVocab?.audioUrl ?? null,
+    lang: 'en-US',
+    rate: 0.85,
+  });
+
+  // TTS for example sentence
+  const sentenceTTS = useTTS({
+    lang: 'en-US',
+    rate: 0.9,
+  });
 
   // --- Loading state ---
   if (isLoading) {
@@ -441,7 +457,28 @@ export default function LessonView() {
             >
               <Card className="p-6 sm:p-8 space-y-4">
                 <div className="text-center space-y-2">
-                  <h2 className="text-3xl font-bold">{currentVocab.english}</h2>
+                  <div className="flex items-center justify-center gap-2">
+                    <h2 className="text-3xl font-bold">{currentVocab.english}</h2>
+                    {vocabTTS.isSupported ? (
+                      <button
+                        type="button"
+                        onClick={() => vocabTTS.speak(currentVocab.english)}
+                        className="p-1.5 rounded-full hover:bg-accent transition-colors text-primary min-h-[44px] min-w-[44px] flex items-center justify-center"
+                        aria-label={vocabTTS.isSpeaking ? 'Stop audio' : 'Play pronunciation'}
+                        title={vocabTTS.provider === 'browser-tts' ? 'Browser TTS' : vocabTTS.provider === 'audio-url' ? 'Recorded audio' : 'Play pronunciation'}
+                      >
+                        {vocabTTS.isSpeaking ? (
+                          <VolumeX className="size-5 animate-pulse" />
+                        ) : (
+                          <Volume2 className="size-5" />
+                        )}
+                      </button>
+                    ) : (
+                      <span className="p-1.5 min-h-[44px] min-w-[44px] flex items-center justify-center" title="Audio not supported">
+                        <Volume2 className="size-5 text-muted-foreground/30" />
+                      </span>
+                    )}
+                  </div>
                   <p className="text-xl text-primary font-medium">
                     {currentVocab.somali}
                   </p>
@@ -459,9 +496,24 @@ export default function LessonView() {
 
                 {currentVocab.exampleSentence && (
                   <div className="mt-4 pt-4 border-t space-y-1">
-                    <p className="text-sm text-foreground">
-                      <Volume2 className="w-4 h-4 inline mr-1" />
-                      {currentVocab.exampleSentence}
+                    <p className="text-sm text-foreground flex items-start gap-1">
+                      {sentenceTTS.isSupported ? (
+                        <button
+                          type="button"
+                          onClick={() => sentenceTTS.speak(currentVocab.exampleSentence!)}
+                          className="shrink-0 mt-0.5 p-1 rounded-full hover:bg-accent transition-colors min-h-[36px] min-w-[36px] flex items-center justify-center"
+                          aria-label={sentenceTTS.isSpeaking ? 'Stop sentence audio' : 'Play example sentence'}
+                        >
+                          {sentenceTTS.isSpeaking ? (
+                            <VolumeX className="size-3.5 animate-pulse text-primary" />
+                          ) : (
+                            <Volume2 className="size-3.5 text-primary" />
+                          )}
+                        </button>
+                      ) : (
+                        <Volume2 className="size-3.5 mt-0.5 shrink-0 text-muted-foreground/30" />
+                      )}
+                      <span>{currentVocab.exampleSentence}</span>
                     </p>
                     {currentVocab.exampleTranslation && (
                       <p className="text-sm text-muted-foreground">

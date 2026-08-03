@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useNavigationStore } from '@/stores/navigation-store';
+import { useAuthStore } from '@/stores/auth-store';
 import type { ContentSource } from '@/types';
 
 interface ReviewItem {
@@ -54,13 +55,15 @@ const tabLabels: Record<string, string> = {
 
 export default function ReviewView() {
   const navigate = useNavigationStore((s) => s.navigate);
+  const userId = useAuthStore((s) => s.user?.id);
   const [data, setData] = useState<ReviewData | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/review');
+      const url = userId ? `/api/review?userId=${userId}` : '/api/review';
+      const res = await fetch(url);
       if (res.ok) {
         const json = await res.json();
         setData(json);
@@ -227,7 +230,7 @@ function ReviewItemCard({
   onApprove: () => void;
   onReject: () => void;
 }) {
-  const cfg = sourceConfig[item.contentSource];
+  const cfg = sourceConfig[item.contentSource || 'human'];
   const SourceIcon = cfg.icon;
 
   const formatDate = (dateStr: string) => {

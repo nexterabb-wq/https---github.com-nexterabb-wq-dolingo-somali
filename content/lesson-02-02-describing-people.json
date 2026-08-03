@@ -1,0 +1,190 @@
+{
+  "id": "lesson-02-02",
+  "unitId": "unit-02",
+  "title": "Describing People",
+  "description": "Learn adjectives to describe people's appearance and personality.",
+  "type": "lesson",
+  "xpReward": 15,
+  "sortOrder": 2,
+  "status": "pending_review",
+  "contentSource": "ai",
+  "sections": [
+    {
+      "id": "sec-02-02-vocab",
+      "lessonId": "lesson-02-02",
+      "title": "Appearance Adjectives",
+      "type": "vocabulary",
+      "sortOrder": 1,
+      "status": "pending_review",
+      "contentSource": "ai",
+      "vocabulary": [
+        {
+          "id": "vocab-02-07",
+          "sectionId": "sec-02-02-vocab",
+          "english": "Tall",
+          "somali": "Dheer",
+          "pronunciationGuide": "tawl",
+          "partOfSpeech": "adjective",
+          "difficulty": "beginner",
+          "exampleSentence": "My brother is very tall.",
+          "exampleTranslation": "Walaalkay waa aad u dheer yahay.",
+          "grammarNotes": "Adjective. Comparative: taller. Superlative: tallest. In Somali, adjectives come after the noun.",
+          "tags": ["describing", "appearance"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "vocab-02-08",
+          "sectionId": "sec-02-02-vocab",
+          "english": "Short",
+          "somali": "Gaab",
+          "pronunciationGuide": "short",
+          "partOfSpeech": "adjective",
+          "difficulty": "beginner",
+          "exampleSentence": "She is shorter than her sister.",
+          "exampleTranslation": "Way ka gaab tahay walaasheed.",
+          "grammarNotes": "Adjective. Opposite of tall. Comparative: shorter.",
+          "tags": ["describing", "appearance"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "vocab-02-09",
+          "sectionId": "sec-02-02-vocab",
+          "english": "Young",
+          "somali": "Yar",
+          "pronunciationGuide": "yuhng",
+          "partOfSpeech": "adjective",
+          "difficulty": "beginner",
+          "exampleSentence": "The young girl is my niece.",
+          "exampleTranslation": "Gabadha yar waa ilmo adeerkeey.",
+          "grammarNotes": "Adjective. Opposite: old. In Somali, 'yar' is used for people and objects alike.",
+          "tags": ["describing", "age"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "vocab-02-10",
+          "sectionId": "sec-02-02-vocab",
+          "english": "Old",
+          "somali": "Weyn",
+          "pronunciationGuide": "old",
+          "partOfSpeech": "adjective",
+          "difficulty": "beginner",
+          "exampleSentence": "The old man is my grandfather.",
+          "exampleTranslation": "Nin weynuhu waa awoowgay.",
+          "grammarNotes": "Adjective. Opposite: young. In Somali, 'weyn' literally means 'big' but is commonly used for elderly people with respect.",
+          "tags": ["describing", "age"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "vocab-02-11",
+          "sectionId": "sec-02-02-vocab",
+          "english": "Kind",
+          "somali": "Naxariis badan",
+          "pronunciationGuide": "kynd",
+          "partOfSpeech": "adjective",
+          "difficulty": "beginner",
+          "exampleSentence": "My mother is very kind.",
+          "exampleTranslation": "Hooyaday waa naxariis badan.",
+          "grammarNotes": "Personality adjective. 'Naxariis badan' literally means 'having much mercy/compassion'.",
+          "tags": ["describing", "personality"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "vocab-02-12",
+          "sectionId": "sec-02-02-vocab",
+          "english": "Beautiful",
+          "somali": "Qurux badan",
+          "pronunciationGuide": "BYOO-ti-ful",
+          "partOfSpeech": "adjective",
+          "difficulty": "beginner",
+          "exampleSentence": "Mogadishu is a beautiful city.",
+          "exampleTranslation": "Muqdisho waa magaalo qurux badan.",
+          "grammarNotes": "Adjective. For people and places. In Somali, 'qurux badan' means 'having much beauty'.",
+          "tags": ["describing", "appearance"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        }
+      ]
+    },
+    {
+      "id": "sec-02-02-exercises",
+      "lessonId": "lesson-02-02",
+      "title": "Practice Descriptions",
+      "type": "exercise",
+      "sortOrder": 2,
+      "status": "pending_review",
+      "contentSource": "ai",
+      "exercises": [
+        {
+          "id": "ex-02-05",
+          "sectionId": "sec-02-02-exercises",
+          "exerciseType": "multiple_choice",
+          "config": {
+            "question": "What does 'Dheer' mean in English?",
+            "somaliPrompt": "'Dheer' waxay u dhigantaa maxay Ingiriisga?",
+            "options": ["Short", "Tall", "Young", "Kind"],
+            "correctIndex": 1,
+            "explanation": "'Dheer' means 'Tall' in Somali."
+          },
+          "xpReward": 5,
+          "sortOrder": 1,
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "ex-02-06",
+          "sectionId": "sec-02-02-exercises",
+          "exerciseType": "translation",
+          "config": {
+            "sourceText": "Naxariis badan",
+            "sourceLang": "so",
+            "targetLang": "en",
+            "answer": "Kind",
+            "options": ["Kind", "Old", "Short", "Beautiful"],
+            "hint": "A personality trait showing compassion"
+          },
+          "xpReward": 5,
+          "sortOrder": 2,
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "ex-02-07",
+          "sectionId": "sec-02-02-exercises",
+          "exerciseType": "fill_blank",
+          "config": {
+            "sentence": "The _____ girl is my daughter.",
+            "answer": "young",
+            "somaliTranslation": "Gabadha _____ way ilmaha iiga tahay.",
+            "hint": "Yar",
+            "options": ["young", "old", "tall", "short"]
+          },
+          "xpReward": 5,
+          "sortOrder": 3,
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "ex-02-08",
+          "sectionId": "sec-02-02-exercises",
+          "exerciseType": "typing",
+          "config": {
+            "prompt": "Type the English word for 'Gaab'",
+            "somaliPrompt": "Ku qor ereyga Ingiriiska ee 'Gaab'",
+            "answer": "short",
+            "hint": "The opposite of tall",
+            "acceptPartial": false
+          },
+          "xpReward": 5,
+          "sortOrder": 4,
+          "status": "pending_review",
+          "contentSource": "ai"
+        }
+      ]
+    }
+  ]
+}

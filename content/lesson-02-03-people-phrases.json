@@ -1,0 +1,174 @@
+{
+  "id": "lesson-02-03",
+  "unitId": "unit-02",
+  "title": "Talking About People",
+  "description": "Learn common phrases for talking about people, relationships, and asking questions about others.",
+  "type": "lesson",
+  "xpReward": 20,
+  "sortOrder": 3,
+  "status": "pending_review",
+  "contentSource": "ai",
+  "sections": [
+    {
+      "id": "sec-02-03-vocab",
+      "lessonId": "lesson-02-03",
+      "title": "People Phrases",
+      "type": "vocabulary",
+      "sortOrder": 1,
+      "status": "pending_review",
+      "contentSource": "ai",
+      "vocabulary": [
+        {
+          "id": "vocab-02-13",
+          "sectionId": "sec-02-03-vocab",
+          "english": "How many people are in your family?",
+          "somali": "Qol ma leedahay xaaskayga?",
+          "pronunciationGuide": "how MAN-ee PEE-pul ar in YOR FAM-lee?",
+          "partOfSpeech": "phrase",
+          "difficulty": "beginner",
+          "exampleSentence": "How many people are in your family?",
+          "exampleTranslation": "Qol ma leedahay xaaskayga?",
+          "grammarNotes": "Question structure: 'Qol' (how many) + 'ma leedahay' (do you have) + 'xaaskayga' (your family). Literal: 'How many does your family have?'",
+          "tags": ["people", "question", "family"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "vocab-02-14",
+          "sectionId": "sec-02-03-vocab",
+          "english": "This is my friend",
+          "somali": "Kan waa saaxiibkay",
+          "pronunciationGuide": "THIS iz my FREND",
+          "partOfSpeech": "phrase",
+          "difficulty": "beginner",
+          "exampleSentence": "This is my friend, Ahmed.",
+          "exampleTranslation": "Kan waa saaxiibkay, Axmed.",
+          "grammarNotes": "'Kan' = 'This (masculine)', 'waa' = 'is', 'saaxiibkay' = 'my friend'. Use 'tan' for feminine 'this'.",
+          "tags": ["people", "introduction"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "vocab-02-15",
+          "sectionId": "sec-02-03-vocab",
+          "english": "He is my uncle",
+          "somali": "Waa adeerkeey",
+          "pronunciationGuide": "hee iz my UNK-ul",
+          "partOfSpeech": "phrase",
+          "difficulty": "beginner",
+          "exampleSentence": "He is my uncle on my father's side.",
+          "exampleTranslation": "Waa adeerkeey ee aabaha ka soo jeeda.",
+          "grammarNotes": "'Adeer' = uncle (paternal). For maternal uncle, use 'abti'. 'Waa' = is/equals.",
+          "tags": ["people", "family"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "vocab-02-16",
+          "sectionId": "sec-02-03-vocab",
+          "english": "She is my aunt",
+          "somali": "Waa habooneed",
+          "pronunciationGuide": "shee iz my ANT",
+          "partOfSpeech": "phrase",
+          "difficulty": "beginner",
+          "exampleSentence": "She is my aunt. She lives in Hargeisa.",
+          "exampleTranslation": "Waa habooneed. Way ku noolaa Hargeysa.",
+          "grammarNotes": "'Habo' = paternal aunt, 'abti' side = maternal aunt. In informal speech, just 'aunt' is used.",
+          "tags": ["people", "family"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "vocab-02-17",
+          "sectionId": "sec-02-03-vocab",
+          "english": "I have a big family",
+          "somali": "Waxaa ii leedahay qoys weyn",
+          "pronunciationGuide": "EYE hav a BIG FAM-lee",
+          "partOfSpeech": "phrase",
+          "difficulty": "beginner",
+          "exampleSentence": "I have a big family with eight siblings.",
+          "exampleTranslation": "Waxaa ii leedahay qoys weyn oo leh siddeed walaal.",
+          "grammarNotes": "'Waxaa ii leedahay' = 'I have' (literally: 'To me there is'). 'Qoys' = family, 'weyn' = big.",
+          "tags": ["people", "family"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        }
+      ]
+    },
+    {
+      "id": "sec-02-03-exercises",
+      "lessonId": "lesson-02-03",
+      "title": "Practice People Phrases",
+      "type": "exercise",
+      "sortOrder": 2,
+      "status": "pending_review",
+      "contentSource": "ai",
+      "exercises": [
+        {
+          "id": "ex-02-09",
+          "sectionId": "sec-02-03-exercises",
+          "exerciseType": "multiple_choice",
+          "config": {
+            "question": "How do you say 'This is my friend' in Somali?",
+            "somaliPrompt": "Sideed u sheegtaa 'This is my friend' af Soomaaliga?",
+            "options": ["Waa saaxiibkay", "Waa adeerkeey", "Hooyaday waa", "Waxaa ii leedahay"],
+            "correctIndex": 0,
+            "explanation": "'Kan waa saaxiibkay' means 'This is my friend' in Somali."
+          },
+          "xpReward": 5,
+          "sortOrder": 1,
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "ex-02-10",
+          "sectionId": "sec-02-03-exercises",
+          "exerciseType": "sentence_ordering",
+          "config": {
+            "words": ["is", "my", "This", "friend"],
+            "correctOrder": [2, 0, 1, 3],
+            "translation": "Kan waa saaxiibkay",
+            "somaliTranslation": "Kan waa saaxiibkay"
+          },
+          "xpReward": 5,
+          "sortOrder": 2,
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "ex-02-11",
+          "sectionId": "sec-02-03-exercises",
+          "exerciseType": "fill_blank",
+          "config": {
+            "sentence": "He is my _____.",
+            "answer": "uncle",
+            "somaliTranslation": "Waa _____.",
+            "hint": "Adeer",
+            "options": ["uncle", "aunt", "brother", "father"]
+          },
+          "xpReward": 5,
+          "sortOrder": 3,
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "ex-02-12",
+          "sectionId": "sec-02-03-exercises",
+          "exerciseType": "translation",
+          "config": {
+            "sourceText": "Waxaa ii leedahay qoys weyn",
+            "sourceLang": "so",
+            "targetLang": "en",
+            "answer": "I have a big family",
+            "options": ["I have a big family", "This is my family", "My family is tall", "I have a friend"],
+            "hint": "Talking about family size"
+          },
+          "xpReward": 5,
+          "sortOrder": 4,
+          "status": "pending_review",
+          "contentSource": "ai"
+        }
+      ]
+    }
+  ]
+}

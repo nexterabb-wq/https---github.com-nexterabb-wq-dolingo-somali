@@ -1,0 +1,191 @@
+{
+  "id": "lesson-02-01",
+  "unitId": "unit-02",
+  "title": "Family Members",
+  "description": "Learn the English words for family members and how to talk about your family.",
+  "type": "lesson",
+  "xpReward": 15,
+  "sortOrder": 1,
+  "status": "pending_review",
+  "contentSource": "ai",
+  "sections": [
+    {
+      "id": "sec-02-01-vocab",
+      "lessonId": "lesson-02-01",
+      "title": "Family Vocabulary",
+      "type": "vocabulary",
+      "sortOrder": 1,
+      "status": "pending_review",
+      "contentSource": "ai",
+      "vocabulary": [
+        {
+          "id": "vocab-02-01",
+          "sectionId": "sec-02-01-vocab",
+          "english": "Mother",
+          "somali": "Hooyo",
+          "pronunciationGuide": "MUH-ther",
+          "partOfSpeech": "noun",
+          "difficulty": "beginner",
+          "exampleSentence": "My mother is a teacher.",
+          "exampleTranslation": "Hooyaday waa macalin ah.",
+          "grammarNotes": "Countable noun. Plural: mothers. Can be informal 'mom' or 'mum'.",
+          "tags": ["family", "basic"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "vocab-02-02",
+          "sectionId": "sec-02-01-vocab",
+          "english": "Father",
+          "somali": "Aabo",
+          "pronunciationGuide": "FAH-ther",
+          "partOfSpeech": "noun",
+          "difficulty": "beginner",
+          "exampleSentence": "My father works in the market.",
+          "exampleTranslation": "Aabahay waa ka shaqeeyaa suuqa.",
+          "grammarNotes": "Countable noun. Plural: fathers. Informal: 'dad'.",
+          "tags": ["family", "basic"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "vocab-02-03",
+          "sectionId": "sec-02-01-vocab",
+          "english": "Brother",
+          "somali": "Walaal",
+          "pronunciationGuide": "BRUH-ther",
+          "partOfSpeech": "noun",
+          "difficulty": "beginner",
+          "exampleSentence": "I have two brothers.",
+          "exampleTranslation": "Waxaa ii leedahay laba walaal.",
+          "grammarNotes": "Countable noun. Somali 'walaal' can mean both brother and sister depending on context; add 'ka' (walaalka) for brother specifically.",
+          "tags": ["family", "basic"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "vocab-02-04",
+          "sectionId": "sec-02-01-vocab",
+          "english": "Sister",
+          "somali": "Walaasha",
+          "pronunciationGuide": "SIS-ter",
+          "partOfSpeech": "noun",
+          "difficulty": "beginner",
+          "exampleSentence": "My sister is older than me.",
+          "exampleTranslation": "Walaashay way ka weyn tahay.",
+          "grammarNotes": "Countable noun. Informal: 'sis'. In Somali, specify with 'walaal ka' (female sibling).",
+          "tags": ["family", "basic"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "vocab-02-05",
+          "sectionId": "sec-02-01-vocab",
+          "english": "Son",
+          "somali": "Ina",
+          "pronunciationGuide": "suhn",
+          "partOfSpeech": "noun",
+          "difficulty": "beginner",
+          "exampleSentence": "He has one son.",
+          "exampleTranslation": "Waxaa leeyahay ina keliya.",
+          "grammarNotes": "Countable noun. Plural: sons. In Somali, 'ina' refers to someone's son.",
+          "tags": ["family"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "vocab-02-06",
+          "sectionId": "sec-02-01-vocab",
+          "english": "Daughter",
+          "somali": "Gabadh",
+          "pronunciationGuide": "DAW-ter",
+          "partOfSpeech": "noun",
+          "difficulty": "beginner",
+          "exampleSentence": "Their daughter is very smart.",
+          "exampleTranslation": "Gabadhoodu way fican tahay.",
+          "grammarNotes": "Countable noun. Plural: daughters. Somali 'gabadh' literally means 'girl' but is commonly used for daughter.",
+          "tags": ["family"],
+          "status": "pending_review",
+          "contentSource": "ai"
+        }
+      ]
+    },
+    {
+      "id": "sec-02-01-exercises",
+      "lessonId": "lesson-02-01",
+      "title": "Practice Family Words",
+      "type": "exercise",
+      "sortOrder": 2,
+      "status": "pending_review",
+      "contentSource": "ai",
+      "exercises": [
+        {
+          "id": "ex-02-01",
+          "sectionId": "sec-02-01-exercises",
+          "exerciseType": "multiple_choice",
+          "config": {
+            "question": "What is 'Hooyo' in English?",
+            "somaliPrompt": "'Hooyo' waa maxay Ingiriisga?",
+            "options": ["Mother", "Father", "Sister", "Daughter"],
+            "correctIndex": 0,
+            "explanation": "'Hooyo' means 'Mother' in Somali."
+          },
+          "xpReward": 5,
+          "sortOrder": 1,
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "ex-02-02",
+          "sectionId": "sec-02-01-exercises",
+          "exerciseType": "multiple_choice",
+          "config": {
+            "question": "How do you say 'Brother' in Somali?",
+            "somaliPrompt": "Sideed u sheegtaa 'Brother' af Soomaaliga?",
+            "options": ["Hooyo", "Aabo", "Walaal", "Gabadh"],
+            "correctIndex": 2,
+            "explanation": "'Walaal' means 'Brother' (and can also mean 'Sister' depending on context)."
+          },
+          "xpReward": 5,
+          "sortOrder": 2,
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "ex-02-03",
+          "sectionId": "sec-02-01-exercises",
+          "exerciseType": "match_word",
+          "config": {
+            "pairs": [
+              { "english": "Mother", "somali": "Hooyo" },
+              { "english": "Father", "somali": "Aabo" },
+              { "english": "Brother", "somali": "Walaal" },
+              { "english": "Sister", "somali": "Walaasha" }
+            ],
+            "instruction": "Match the English family words with their Somali translations"
+          },
+          "xpReward": 10,
+          "sortOrder": 3,
+          "status": "pending_review",
+          "contentSource": "ai"
+        },
+        {
+          "id": "ex-02-04",
+          "sectionId": "sec-02-01-exercises",
+          "exerciseType": "fill_blank",
+          "config": {
+            "sentence": "My _____ is a teacher.",
+            "answer": "mother",
+            "somaliTranslation": "_____ way macalin ah.",
+            "hint": "Hooyo",
+            "options": ["mother", "father", "brother", "sister"]
+          },
+          "xpReward": 5,
+          "sortOrder": 4,
+          "status": "pending_review",
+          "contentSource": "ai"
+        }
+      ]
+    }
+  ]
+}

@@ -7,14 +7,40 @@ const REVIEWABLE_TYPES = ['course', 'unit', 'lesson', 'vocabulary', 'exercise'] 
 type ReviewableType = (typeof REVIEWABLE_TYPES)[number];
 const REVIEWER_ROLES = ['reviewer', 'admin', 'linguist'];
 
-export async function GET() {
+/**
+ * Get the authenticated user — supports both NextAuth session cookies
+ * and SPA-style userId query/header (for the SPA auth pattern).
+ */
+async function getAuthUser(request: NextRequest) {
+  // Try NextAuth session first
+  const session = await getServerSession(authOptions);
+  if (session?.user?.id) {
+    return session.user;
+  }
+
+  // Fallback: SPA auth via userId query param or header
+  const userId =
+    request.nextUrl.searchParams.get('userId') ||
+    request.headers.get('x-user-id');
+  if (userId) {
+    const user = await db.user.findUnique({
+      where: { id: userId },
+      select: { id: true, email: true, name: true, role: true },
+    });
+    if (user) return user;
+  }
+
+  return null;
+}
+
+export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.id) {
+    const user = await getAuthUser(request);
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    if (!REVIEWER_ROLES.includes(session.user.role)) {
+    if (!REVIEWER_ROLES.includes(user.role)) {
       return NextResponse.json({ error: 'Forbidden: reviewer role required' }, { status: 403 });
     }
 
@@ -61,12 +87,12 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.id) {
+    const user = await getAuthUser(request);
+    if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    if (!REVIEWER_ROLES.includes(session.user.role)) {
+    if (!REVIEWER_ROLES.includes(user.role)) {
       return NextResponse.json({ error: 'Forbidden: reviewer role required' }, { status: 403 });
     }
 

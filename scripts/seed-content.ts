@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, ContentStatus } from '@prisma/client';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -6,8 +6,27 @@ const prisma = new PrismaClient();
 
 const contentDir = path.join(process.cwd(), 'content');
 
+/**
+ * Determines the status for a content item.
+ * - If the JSON has a 'status' field, use it (respecting the content workflow).
+ * - If the JSON has no 'status' field (e.g. vocabulary/exercises without explicit status),
+ *   inherit from the parent's contentSource: 'linguist'/'human' → 'published', else → 'pending_review'.
+ * - contentSource 'ai' always defaults to 'pending_review' unless explicitly overridden.
+ */
+function resolveStatus(
+  item: Record<string, unknown>,
+  parentContentSource?: string,
+): ContentStatus {
+  if (item.status && Object.values(ContentStatus).includes(item.status as ContentStatus)) {
+    return item.status as ContentStatus;
+  }
+  // Default based on contentSource
+  const source = (item.contentSource as string) || parentContentSource || 'human';
+  return source === 'ai' ? 'pending_review' : 'published';
+}
+
 async function main() {
-  console.log('Seeding foundational content (all set to published)...');
+  console.log('Seeding content (respecting status from JSON files)...');
 
   let courseCount = 0;
   let unitCount = 0;
@@ -20,13 +39,14 @@ async function main() {
   const courseFile = path.join(contentDir, 'course.json');
   if (fs.existsSync(courseFile)) {
     const raw = JSON.parse(fs.readFileSync(courseFile, 'utf-8'));
-    const course = { ...raw, status: 'published' as const };
+    const status = resolveStatus(raw);
+    const course = { ...raw, status };
     await prisma.course.upsert({
       where: { id: course.id },
       update: course,
       create: course,
     });
-    console.log(`  ✓ Course: ${course.title} [${course.status}]`);
+    console.log(`  ${status === 'published' ? '✓' : '⏳'} Course: ${course.title} [${status}]`);
     courseCount++;
   } else {
     console.log('  ✗ course.json not found');
@@ -36,13 +56,14 @@ async function main() {
   const unitFiles = fs.readdirSync(contentDir).filter(f => f.startsWith('unit-') && f.endsWith('.json'));
   for (const file of unitFiles.sort()) {
     const raw = JSON.parse(fs.readFileSync(path.join(contentDir, file), 'utf-8'));
-    const unit = { ...raw, status: 'published' as const };
+    const status = resolveStatus(raw);
+    const unit = { ...raw, status };
     await prisma.unit.upsert({
       where: { id: unit.id },
       update: unit,
       create: unit,
     });
-    console.log(`  ✓ Unit: ${unit.title} [${unit.status}]`);
+    console.log(`  ${status === 'published' ? '✓' : '⏳'} Unit: ${unit.title} [${status}]`);
     unitCount++;
   }
 
@@ -52,22 +73,26 @@ async function main() {
     const lessonData = JSON.parse(fs.readFileSync(path.join(contentDir, file), 'utf-8'));
     const { sections, ...lessonFields } = lessonData;
 
-    // Force published on lesson
-    const lesson = { ...lessonFields, status: 'published' as const };
+    const lessonStatus = resolveStatus(lessonFields);
+    // Lesson model doesn't have contentSource — strip it
+    const { contentSource: _lessonCS, ...lessonClean } = lessonFields;
+    const lesson = { ...lessonClean, status: lessonStatus };
     await prisma.lesson.upsert({
       where: { id: lesson.id },
       update: lesson,
       create: lesson,
     });
-    console.log(`  ✓ Lesson: ${lesson.title} [${lesson.status}]`);
+    console.log(`  ${lessonStatus === 'published' ? '✓' : '⏳'} Lesson: ${lesson.title} [${lessonStatus}]`);
     lessonCount++;
 
     if (sections) {
       for (const section of sections) {
         const { vocabulary, exercises, ...sectionFields } = section;
 
-        // Force published on section
-        const sec = { ...sectionFields, status: 'published' as const };
+        const secStatus = resolveStatus(sectionFields, lesson.contentSource as string);
+        // Section model doesn't have contentSource — strip it
+        const { contentSource: _secCS, ...secClean } = sectionFields;
+        const sec = { ...secClean, status: secStatus };
         await prisma.section.upsert({
           where: { id: sec.id },
           update: sec,
@@ -75,13 +100,13 @@ async function main() {
         });
         sectionCount++;
 
-        // Seed vocabulary — force published
         if (vocabulary) {
           for (const vocab of vocabulary) {
+            const vStatus = resolveStatus(vocab, section.contentSource as string || lesson.contentSource as string);
             const vocabData = {
               ...vocab,
               tags: Array.isArray(vocab.tags) ? JSON.stringify(vocab.tags) : vocab.tags,
-              status: 'published' as const,
+              status: vStatus,
             };
             await prisma.vocabulary.upsert({
               where: { id: vocabData.id },
@@ -92,13 +117,13 @@ async function main() {
           }
         }
 
-        // Seed exercises — force published
         if (exercises) {
           for (const exercise of exercises) {
+            const eStatus = resolveStatus(exercise, section.contentSource as string || lesson.contentSource as string);
             const exerciseData = {
               ...exercise,
               config: typeof exercise.config === 'string' ? exercise.config : JSON.stringify(exercise.config),
-              status: 'published' as const,
+              status: eStatus,
             };
             await prisma.exercise.upsert({
               where: { id: exerciseData.id },
@@ -109,7 +134,7 @@ async function main() {
           }
         }
 
-        console.log(`    Section: ${sec.title || sec.id} (${(vocabulary?.length ?? 0)} vocab, ${(exercises?.length ?? 0)} exercises)`);
+        console.log(`    ${secStatus === 'published' ? '✓' : '⏳'} Section: ${sec.title || sec.id} (${(vocabulary?.length ?? 0)} vocab, ${(exercises?.length ?? 0)} exercises) [${secStatus}]`);
       }
     }
   }
