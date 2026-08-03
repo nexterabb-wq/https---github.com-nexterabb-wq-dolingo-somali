@@ -69,33 +69,25 @@ export default function RegisterView() {
 
       // Auto sign-in after successful registration
       try {
-        const csrfRes = await fetch('/api/auth/csrf');
-        const csrfData = await csrfRes.json();
-        const csrfToken = csrfData?.csrfToken;
-
-        const loginRes = await fetch('/api/auth/callback/credentials', {
+        const loginRes = await fetch('/api/auth/login', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams({
-            email: data.email,
-            password: data.password,
-            csrfToken: csrfToken || '',
-          }),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: data.email, password: data.password }),
         });
 
-        const sessionRes = await fetch('/api/auth/session');
-        const sessionData = await sessionRes.json();
-
-        if (sessionData?.user) {
-          setUser({
-            id: sessionData.user.id || '',
-            email: sessionData.user.email || data.email,
-            name: sessionData.user.name || data.name || null,
-            image: sessionData.user.image || null,
-            role: sessionData.user.role || 'learner',
-          });
-          navigate('dashboard');
-          return;
+        if (loginRes.ok) {
+          const loginData = await loginRes.json();
+          if (loginData?.user) {
+            setUser({
+              id: loginData.user.id || '',
+              email: loginData.user.email || data.email,
+              name: loginData.user.name || data.name || null,
+              image: loginData.user.image || null,
+              role: loginData.user.role || 'learner',
+            });
+            navigate('dashboard');
+            return;
+          }
         }
       } catch {
         // Auto-login failed, fall through to login page

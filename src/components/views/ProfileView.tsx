@@ -71,14 +71,12 @@ export default function ProfileView() {
 
   async function handleSignOut() {
     try {
-      await fetch('/api/auth/signout', { method: 'POST' });
-      useAuthStore.getState().logout();
-      navigate('landing');
+      await fetch('/api/auth/signout', { method: 'POST', credentials: 'include' });
     } catch {
-      // Clear local state regardless
-      useAuthStore.getState().logout();
-      navigate('landing');
+      // Ignore
     }
+    useAuthStore.getState().logout();
+    navigate('landing');
   }
 
   if (loading) {

@@ -48,28 +48,23 @@ export default function LoginView() {
     setIsSubmitting(true);
 
     try {
-      // Get CSRF token first
-      const csrfRes = await fetch('/api/auth/csrf');
-      const csrfData = await csrfRes.json();
-      const csrfToken = csrfData?.csrfToken;
-
-      // Sign in via NextAuth credentials endpoint
-      const res = await fetch('/api/auth/callback/credentials', {
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          email: data.email,
-          password: data.password,
-          csrfToken: csrfToken || '',
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: data.email, password: data.password }),
       });
 
-      // Fetch the session to confirm login
-      const sessionRes = await fetch('/api/auth/session');
-      const sessionData = await sessionRes.json();
+      if (!res.ok) {
+        const body = await res.json().catch(() => null);
+        if (res.status === 401) {
+          setError('Invalid email or password. Please try again.');
+        } else {
+          setError(body?.error || 'Something went wrong. Please try again later.');
+        }
+        return;
+      }
 
+      const sessionData = await res.json();
       if (sessionData?.user) {
         setUser({
           id: sessionData.user.id || '',
