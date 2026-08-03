@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { useNavigationStore } from '@/stores/navigation-store';
 import { useTheme } from 'next-themes';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -23,8 +23,13 @@ const stagger = {
 export default function SettingsView() {
   const navigate = useNavigationStore((s) => s.navigate);
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const isDark = theme === 'dark';
   // next-themes resolves after hydration; use theme directly (defaults to 'light' before mount)
