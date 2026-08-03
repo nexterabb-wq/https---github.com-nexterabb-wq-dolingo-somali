@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface UseTTSOptions {
   /** Preferred audio URL — if set and valid, plays instead of speechSynthesis */
@@ -17,24 +17,40 @@ interface UseTTSReturn {
   provider: 'audio-url' | 'browser-tts' | null;
 }
 
+/**
+ * Pre-loads voices for speechSynthesis. Chrome returns [] on first getVoices()
+ * call — this listens for the async 'voiceschanged' event so voices are ready
+ * when the user clicks the pronunciation button.
+ */
+function useVoicesReady() {
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    const populate = () => setVoices(window.speechSynthesis.getVoices());
+    populate();
+    window.speechSynthesis.addEventListener('voiceschanged', populate);
+    return () => window.speechSynthesis.removeEventListener('voiceschanged', populate);
+  }, []);
+  return voices;
+}
+
 export function useTTS({ audioUrl, lang = 'en-US', rate = 0.9 }: UseTTSOptions = {}): UseTTSReturn {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [provider, setProvider] = useState<UseTTSReturn['provider']>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const voices = useVoicesReady();
 
   const isSupported =
     typeof window !== 'undefined' &&
     ('speechSynthesis' in window || (audioUrl && typeof Audio !== 'undefined'));
 
   const stop = useCallback(() => {
-    // Stop audio element
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
       audioRef.current = null;
     }
-    // Stop speech synthesis
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
     }
@@ -65,10 +81,9 @@ export function useTTS({ audioUrl, lang = 'en-US', rate = 0.9 }: UseTTSOptions =
             audioRef.current = null;
           };
           audio.onerror = () => {
-            // Audio URL failed — fall through to speechSynthesis
             audioRef.current = null;
             if (text && 'speechSynthesis' in window) {
-              // Will be handled below
+              // Fall through to speechSynthesis below
             } else {
               setIsSpeaking(false);
               setProvider(null);
@@ -76,10 +91,7 @@ export function useTTS({ audioUrl, lang = 'en-US', rate = 0.9 }: UseTTSOptions =
           };
           audio.play().catch(() => {
             audioRef.current = null;
-            // Fall through to speechSynthesis below if available
           });
-          // If audioUrl started playing, don't continue to speechSynthesis
-          // The onerror handler above will fall through if needed
           return;
         } catch {
           // Fall through to speechSynthesis
@@ -91,7 +103,6 @@ export function useTTS({ audioUrl, lang = 'en-US', rate = 0.9 }: UseTTSOptions =
       if (!('speechSynthesis' in window)) return;
 
       try {
-        // Cancel any pending utterances
         window.speechSynthesis.cancel();
 
         const utterance = new SpeechSynthesisUtterance(text);
@@ -99,8 +110,7 @@ export function useTTS({ audioUrl, lang = 'en-US', rate = 0.9 }: UseTTSOptions =
         utterance.rate = rate;
         utterance.pitch = 1;
 
-        // Try to pick an English voice
-        const voices = window.speechSynthesis.getVoices();
+        // Pick best available English voice (uses pre-loaded voices)
         const englishVoice = voices.find(
           (v) => v.lang.startsWith('en') && v.localService
         ) ?? voices.find((v) => v.lang.startsWith('en'));
@@ -126,7 +136,7 @@ export function useTTS({ audioUrl, lang = 'en-US', rate = 0.9 }: UseTTSOptions =
         setProvider(null);
       }
     },
-    [audioUrl, lang, rate, stop],
+    [audioUrl, lang, rate, stop, voices],
   );
 
   return { speak, stop, isSpeaking, isSupported, provider };
