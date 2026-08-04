@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import jwt from 'jsonwebtoken';
-
-const JWT_SECRET = process.env.NEXTAUTH_SECRET || 'duolingo-somali-dev-secret-change-in-production';
+import { decode } from 'next-auth/jwt';
 
 export async function GET(req: NextRequest) {
   try {
@@ -11,23 +9,29 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const decoded = jwt.verify(token, JWT_SECRET) as {
-      sub: string;
-      email: string;
-      name: string | null;
-      role: string;
-    };
+    const secret = process.env.NEXTAUTH_SECRET;
+    if (!secret) {
+      console.error('[GET /api/auth/session] NEXTAUTH_SECRET not set');
+      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
+    }
+
+    const decoded = await decode({ token, secret });
+
+    if (!decoded?.sub) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
     return NextResponse.json({
       user: {
-        id: decoded.sub,
-        email: decoded.email,
-        name: decoded.name,
+        id: decoded.sub as string,
+        email: (decoded.email as string) || '',
+        name: (decoded.name as string) || null,
         image: null,
-        role: decoded.role,
+        role: (decoded.role as string) || 'learner',
       },
     });
-  } catch {
+  } catch (error) {
+    console.error('[GET /api/auth/session] Error:', error);
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 }

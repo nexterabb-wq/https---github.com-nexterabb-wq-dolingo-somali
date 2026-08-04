@@ -1,13 +1,12 @@
-import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { getSessionFromRequest } from '@/lib/auth';
 
 const REFILL_COOLDOWN_MS = 30 * 60 * 1000; // 30 minutes
 
-export async function POST() {
+export async function POST(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getSessionFromRequest(req);
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }

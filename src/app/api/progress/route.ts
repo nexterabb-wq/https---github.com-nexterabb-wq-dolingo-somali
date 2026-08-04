@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 import { db } from '@/lib/db';
+import { getSessionFromRequest } from '@/lib/auth';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getSessionFromRequest(req);
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -35,7 +34,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getSessionFromRequest(req);
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -45,15 +44,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'lessonId required' }, { status: 400 });
     }
 
+    const userId = session.user.id;
+
     const existing = await db.userProgress.findUnique({
-      where: { userId_lessonId: { userId: session.user.id, lessonId } },
+      where: { userId_lessonId: { userId, lessonId } },
     });
 
     const completed = score !== undefined && score >= 70;
     const progress = await db.userProgress.upsert({
-      where: { userId_lessonId: { userId: session.user.id, lessonId } },
+      where: { userId_lessonId: { userId, lessonId } },
       create: {
-        userId: session.user.id,
+        userId,
         lessonId,
         completed,
         score,
@@ -73,16 +74,16 @@ export async function POST(req: NextRequest) {
     // Update gamification
     if (xpEarned && xpEarned > 0) {
       await db.xpTransaction.create({
-        data: { userId: session.user.id, amount: xpEarned, source: 'lesson_complete', sourceId: lessonId },
+        data: { userId, amount: xpEarned, source: 'lesson_complete', sourceId: lessonId },
       });
     }
 
     // Update daily stats
     const today = new Date().toISOString().split('T')[0];
     await db.userStatistic.upsert({
-      where: { userId_date: { userId: session.user.id, date: today } },
+      where: { userId_date: { userId, date: today } },
       create: {
-        userId: session.user.id,
+        userId,
         date: today,
         lessonsCompleted: completed ? 1 : 0,
         xpEarned: xpEarned || 0,
@@ -96,7 +97,7 @@ export async function POST(req: NextRequest) {
     // Update streak
     if (completed) {
       const streak = await db.dailyStreak.findUnique({
-        where: { userId: session.user.id },
+        where: { userId },
       });
       if (streak) {
         const todayDate = new Date().toISOString().split('T')[0];
@@ -111,7 +112,7 @@ export async function POST(req: NextRequest) {
         }
 
         await db.dailyStreak.update({
-          where: { userId: session.user.id },
+          where: { userId },
           data: {
             currentStreak: newCurrent,
             longestStreak: Math.max(streak.longestStreak, newCurrent),
@@ -125,11 +126,11 @@ export async function POST(req: NextRequest) {
     const coinAmount = Math.floor((score ?? 0) / 10);
     if (coinAmount > 0) {
       await db.coins.update({
-        where: { userId: session.user.id },
+        where: { userId },
         data: { balance: { increment: coinAmount } },
       });
       await db.coinTransaction.create({
-        data: { userId: session.user.id, amount: coinAmount, source: 'lesson_complete', sourceId: lessonId },
+        data: { userId, amount: coinAmount, source: 'lesson_complete', sourceId: lessonId },
       });
     }
 

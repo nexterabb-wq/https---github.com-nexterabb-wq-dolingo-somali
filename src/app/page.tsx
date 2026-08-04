@@ -37,6 +37,7 @@ const pageFade = {
 
 function AppContent() {
   const currentView = useNavigationStore((s) => s.currentView);
+  const navigate = useNavigationStore((s) => s.navigate);
   const { setUser, setGamification, setAchievements, setLevels } = useAuthStore();
   const { setCourses, setProgressMap } = useLessonStore();
 
@@ -63,7 +64,15 @@ function AppContent() {
               const gamRes = await fetch('/api/gamification');
               if (gamRes.ok && !cancelled) {
                 const gamData = await gamRes.json();
-                if (gamData.gamification) setGamification(gamData.gamification);
+                setGamification({
+                  xp: gamData.totalXp ?? 0,
+                  hearts: gamData.hearts?.current ?? 5,
+                  maxHearts: gamData.hearts?.max ?? 5,
+                  coins: gamData.coins ?? 0,
+                  currentStreak: gamData.streak?.current ?? 0,
+                  longestStreak: gamData.streak?.longest ?? 0,
+                  lastActiveAt: gamData.streak?.lastActiveAt ?? null,
+                });
                 if (gamData.achievements) setAchievements(gamData.achievements);
                 if (gamData.levels) setLevels(gamData.levels);
               }
@@ -75,12 +84,9 @@ function AppContent() {
             try {
               const progRes = await fetch('/api/progress');
               if (progRes.ok && !cancelled) {
-                const progData: UserProgressData[] = await progRes.json();
-                const map: Record<string, UserProgressData> = {};
-                for (const p of progData) {
-                  map[p.lessonId] = p;
-                }
-                setProgressMap(map);
+                const progData = await progRes.json();
+                // API returns Record<string, UserProgressData>
+                setProgressMap(progData);
               }
             } catch {
               // Silent fail
@@ -95,6 +101,11 @@ function AppContent() {
               }
             } catch {
               // Silent fail
+            }
+
+            // If user is on an auth-only view, redirect to dashboard
+            if (!cancelled && (currentView === 'landing' || currentView === 'login' || currentView === 'register')) {
+              navigate('dashboard');
             }
           }
         }

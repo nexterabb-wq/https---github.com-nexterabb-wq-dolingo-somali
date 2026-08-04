@@ -84,3 +84,34 @@ Stage Summary:
 - useTTS voice preloading fix for Chrome compatibility
 - All 3 verification checks passed (Check 3 code-correct, environment-limited)
 - PROJECT_ROADMAP.md created with PostgreSQL migration blocker documented
+
+---
+Task ID: 4
+Agent: Super Z (main)
+Task: Fix session/auth persistence bug and progress-persistence-after-refresh bug
+
+Work Log:
+- Diagnosed root cause: /api/auth/login returned user JSON but never set a session cookie
+- On refresh, /api/auth/session found no cookie → 401 → user silently logged out
+- Progress POST also used getServerSession → 401 → progress was NEVER saved to DB
+- Also found gamification data shape mismatch in page.tsx initSession
+- Fix 1: /api/auth/login now uses next-auth/jwt encode() to create a proper JWT and sets next-auth.session-token cookie via cookies() API
+- Fix 2: /api/auth/session now uses next-auth/jwt decode() instead of jsonwebtoken (compatible with encode)
+- Fix 3: Created getSessionFromRequest() in auth.ts — lightweight session extraction reading cookie + decoding with next-auth/jwt
+- Fix 4: Replaced getServerSession(authOptions) in /api/progress and /api/gamification with getSessionFromRequest(req) — resolves JWE incompatibility
+- Fix 5: Fixed page.tsx initSession gamification mapping (API returns flat fields, not nested gamification object)
+- Fix 6: Fixed page.tsx progress loading (API returns Record, not array)
+- Fix 7: Added navigate('dashboard') after session restoration on auth-only views
+- Fix 8: Added NEXTAUTH_SECRET and NEXTAUTH_URL to .env
+- Fix 9: Updated /api/gamification/hearts to use getSessionFromRequest
+- API-level verification: login→session→gamification→progress all 200, progress save→read round-trip verified
+- Browser verification (all 3 checks passed):
+  - CHECK 1: Login → hard refresh → still on dashboard ✅
+  - CHECK 2: Complete lesson → Learn shows completed → refresh → still completed ✅
+  - CHECK 3: 3 consecutive refreshes → XP=50 Hearts=5 Coins=16 Streak=1 consistent ✅
+
+Stage Summary:
+- Both bugs had the same root cause: no session cookie = no user identity = no progress save/load
+- Progress data WAS being lost (never saved to DB because POST returned 401)
+- After fix: login sets JWT cookie, all API routes decode it consistently, progress persists in DB across sessions
+- 5 files changed: auth.ts, login/route.ts, session/route.ts, progress/route.ts, gamification/route.ts, page.tsx, hearts/route.ts
