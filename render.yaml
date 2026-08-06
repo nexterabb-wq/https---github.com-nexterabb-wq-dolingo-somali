@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: duolingo-somali
+    runtime: node
+    plan: free
+    buildCommand: npx prisma generate && npm run build
+    startCommand: node .next/standalone/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXTAUTH_SECRET
+        generateValue: true
+      - key: NEXTAUTH_URL
+        sync: false
+      - key: DATABASE_URL
+        value: file:/data/custom.db
+    disk:
+      name: db-data
+      mountPath: /data
+      sizeGB: 1

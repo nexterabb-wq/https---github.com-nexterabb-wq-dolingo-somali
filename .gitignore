@@ -50,5 +50,19 @@ test
 prompt
 
 server.log
+
+# Database
+/db/*.db
+/db/*.db-journal
+
+# Uploads
+/upload/
+
+# Scripts (local only)
+/scripts/
+
+# Standalone server starter (env vars baked in)
+server-start.js
+
 # Skills directory
 /skills/
