@@ -1,4 +1,7 @@
 #!/bin/bash
-# Start script for Duolingo Somali
 cd /home/z/my-project
-exec npx next dev -p 3000
+export NEXTAUTH_SECRET='duolingo-somali-secret-key-2024-xK9mZp3vR7nL'
+export NEXTAUTH_URL='http://localhost:3000'
+export DATABASE_URL='file:/home/z/my-project/db/custom.db'
+export NODE_ENV=production
+exec node server-start.js
