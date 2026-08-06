@@ -51,18 +51,19 @@ prompt
 
 server.log
 
-# Database
-/db/*.db
-/db/*.db-journal
+# Database (local dev only)
+*.db
+*.db-journal
 
 # Uploads
 /upload/
 
-# Scripts (local only)
-/scripts/
+# Scripts output
+/scripts/*.js
 
-# Standalone server starter (env vars baked in)
+# Local server starter
 server-start.js
+start.sh
 
 # Skills directory
 /skills/
