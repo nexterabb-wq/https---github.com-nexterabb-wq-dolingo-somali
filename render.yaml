@@ -3,7 +3,7 @@ services:
     name: duolingo-somali
     runtime: node
     plan: free
-    buildCommand: npx prisma generate && npm run build
+    buildCommand: npx prisma generate && npx prisma db push --skip-generate && npm run build
     startCommand: node .next/standalone/server.js
     envVars:
       - key: NODE_ENV
