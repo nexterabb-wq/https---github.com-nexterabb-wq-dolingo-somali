@@ -58,8 +58,9 @@ export default function LessonView() {
   const [answered, setAnswered] = useState(false);
   const [lastCorrect, setLastCorrect] = useState<boolean | null>(null);
   const [showNoHearts, setShowNoHearts] = useState(false);
-  const [isVocabSection, setIsVocabSection] = useState(false);
   const [currentVocabIndex, setCurrentVocabIndex] = useState(0);
+
+  const isVocabSection = currentSection?.type === 'vocabulary';
   const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Derived: current section
@@ -101,17 +102,6 @@ export default function LessonView() {
           totalExerciseCount) *
         100
       : 0;
-
-  // Check if current section is vocabulary
-  useEffect(() => {
-    if (currentSection) {
-      const isVocab = currentSection.type === 'vocabulary';
-      setIsVocabSection(isVocab);
-      if (isVocab) {
-        setCurrentVocabIndex(0);
-      }
-    }
-  }, [currentSection]);
 
   // Fetch lesson data on mount
   useEffect(() => {
