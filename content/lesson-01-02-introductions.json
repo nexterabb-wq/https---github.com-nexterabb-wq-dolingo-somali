@@ -15,6 +15,7 @@
       "title": "Introduction Phrases",
       "type": "vocabulary",
       "sortOrder": 1,
+      "status": "published",
       "vocabulary": [
         {
           "id": "vocab-07",
@@ -27,7 +28,8 @@
           "exampleSentence": "My name is Ahmed.",
           "exampleTranslation": "Magacaygu waa Axmed.",
           "grammarNotes": "Used to introduce yourself. Literally: 'My name is...'",
-          "tags": ["introduction", "basic"]
+          "tags": ["introduction", "basic"],
+          "status": "published"
         },
         {
           "id": "vocab-08",
@@ -40,7 +42,8 @@
           "exampleSentence": "What is your name?",
           "exampleTranslation": "Magacaaga waa?",
           "grammarNotes": "A question to ask someone's name.",
-          "tags": ["introduction", "question"]
+          "tags": ["introduction", "question"],
+          "status": "published"
         },
         {
           "id": "vocab-09",
@@ -53,7 +56,8 @@
           "exampleSentence": "Nice to meet you, Fatima!",
           "exampleTranslation": "Waan ku faraxsanahay inaan kula qabto, Faadumo!",
           "grammarNotes": "Used after learning someone's name. Short form: 'Nice to meet you'.",
-          "tags": ["introduction", "polite"]
+          "tags": ["introduction", "polite"],
+          "status": "published"
         },
         {
           "id": "vocab-10",
@@ -66,7 +70,8 @@
           "exampleSentence": "I am from Mogadishu.",
           "exampleTranslation": "Waan ka imaanahay Muqdisho.",
           "grammarNotes": "Used to state your origin.",
-          "tags": ["introduction", "origin"]
+          "tags": ["introduction", "origin"],
+          "status": "published"
         }
       ]
     },
@@ -76,6 +81,7 @@
       "title": "Practice Introductions",
       "type": "exercise",
       "sortOrder": 2,
+      "status": "published",
       "exercises": [
         {
           "id": "ex-02-01",
@@ -89,7 +95,8 @@
             "explanation": "'What is your name?' is the correct way to ask someone's name."
           },
           "xpReward": 5,
-          "sortOrder": 1
+          "sortOrder": 1,
+          "status": "published"
         },
         {
           "id": "ex-02-02",
@@ -103,7 +110,8 @@
             "options": ["My name is", "What is", "I am from", "Nice to"]
           },
           "xpReward": 5,
-          "sortOrder": 2
+          "sortOrder": 2,
+          "status": "published"
         },
         {
           "id": "ex-02-03",
@@ -117,7 +125,8 @@
             "acceptPartial": false
           },
           "xpReward": 5,
-          "sortOrder": 3
+          "sortOrder": 3,
+          "status": "published"
         },
         {
           "id": "ex-02-04",
@@ -130,7 +139,56 @@
             "somaliTranslation": "Magacaygu waa Axmed"
           },
           "xpReward": 5,
-          "sortOrder": 4
+          "sortOrder": 4,
+          "status": "published"
+        },
+        {
+          "id": "ex-02-05",
+          "sectionId": "sec-01-02-exercises",
+          "exerciseType": "translation",
+          "config": {
+            "sourceText": "Waan ku faraxsanahay",
+            "sourceLang": "so",
+            "targetLang": "en",
+            "answer": "Nice to meet you",
+            "options": ["Nice to meet you", "My name is", "What is your name?", "I am from"],
+            "hint": "A polite greeting when meeting someone"
+          },
+          "xpReward": 5,
+          "sortOrder": 5,
+          "status": "published"
+        },
+        {
+          "id": "ex-02-06",
+          "sectionId": "sec-01-02-exercises",
+          "exerciseType": "multiple_choice",
+          "config": {
+            "question": "What does 'Waan ka imaanahay' mean in English?",
+            "somaliPrompt": "'Waan ka imaanahay' macnaheedu waa maxay af Ingiriis?",
+            "options": ["I am from", "My name is", "Nice to meet you", "What is your name?"],
+            "correctIndex": 0,
+            "explanation": "'Waan ka imaanahay' means 'I am from' and is used to give your origin."
+          },
+          "xpReward": 5,
+          "sortOrder": 6,
+          "status": "published"
+        },
+        {
+          "id": "ex-02-07",
+          "sectionId": "sec-01-02-exercises",
+          "exerciseType": "match_word",
+          "config": {
+            "pairs": [
+              { "english": "My name is", "somali": "Magacaygu waa" },
+              { "english": "What is your name?", "somali": "Magacaaga waa?" },
+              { "english": "Nice to meet you", "somali": "Waan ku faraxsanahay inaan kula qabto" },
+              { "english": "I am from", "somali": "Waan ka imaanahay" }
+            ],
+            "instruction": "Match each introduction phrase to its Somali meaning"
+          },
+          "xpReward": 10,
+          "sortOrder": 7,
+          "status": "published"
         }
       ]
     }
