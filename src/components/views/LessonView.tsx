@@ -58,12 +58,12 @@ export default function LessonView() {
   const [answered, setAnswered] = useState(false);
   const [lastCorrect, setLastCorrect] = useState<boolean | null>(null);
   const [showNoHearts, setShowNoHearts] = useState(false);
-  const [isVocabSection, setIsVocabSection] = useState(false);
   const [currentVocabIndex, setCurrentVocabIndex] = useState(0);
   const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Derived: current section
+  // Derived: current section and section type
   const currentSection = currentSections[currentSectionIndex] ?? null;
+  const isVocabSection = currentSection?.type === 'vocabulary';
 
   // Derived: exercises for current section
   const sectionExercises = useMemo(() => {
@@ -102,16 +102,12 @@ export default function LessonView() {
         100
       : 0;
 
-  // Check if current section is vocabulary
+  // Reset vocabulary index when entering a vocabulary section
   useEffect(() => {
-    if (currentSection) {
-      const isVocab = currentSection.type === 'vocabulary';
-      setIsVocabSection(isVocab);
-      if (isVocab) {
-        setCurrentVocabIndex(0);
-      }
+    if (isVocabSection) {
+      setCurrentVocabIndex(0);
     }
-  }, [currentSection]);
+  }, [isVocabSection]);
 
   // Fetch lesson data on mount
   useEffect(() => {
@@ -167,6 +163,27 @@ export default function LessonView() {
     };
   }, [viewParams.lessonId]);
 
+  // Current vocabulary card data (computed before TTS hooks)
+  const sectionVocab = useMemo(() => {
+    if (!isVocabSection || !currentSection) return [];
+    return allVocabulary.filter((v) => v.sectionId === currentSection.id);
+  }, [isVocabSection, currentSection, allVocabulary]);
+
+  const currentVocab = sectionVocab[currentVocabIndex] ?? null;
+
+  // TTS for current vocabulary word (after currentVocab is available)
+  const vocabTTS = useTTS({
+    audioUrl: currentVocab?.audioUrl ?? null,
+    lang: 'en-US',
+    rate: 0.85,
+  });
+
+  // TTS for example sentence
+  const sentenceTTS = useTTS({
+    lang: 'en-US',
+    rate: 0.9,
+  });
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -176,7 +193,7 @@ export default function LessonView() {
       vocabTTS.stop();
       sentenceTTS.stop();
     };
-  }, []);
+  }, [vocabTTS, sentenceTTS]);
 
   // Reset answered state when exercise changes
   useEffect(() => {
@@ -305,27 +322,6 @@ export default function LessonView() {
     resetLesson();
     navigate('dashboard');
   }, [resetLesson, navigate]);
-
-  // Current vocabulary card data (computed before TTS hooks)
-  const sectionVocab = useMemo(() => {
-    if (!isVocabSection || !currentSection) return [];
-    return allVocabulary.filter((v) => v.sectionId === currentSection.id);
-  }, [isVocabSection, currentSection, allVocabulary]);
-
-  const currentVocab = sectionVocab[currentVocabIndex] ?? null;
-
-  // TTS for current vocabulary word (after currentVocab is available)
-  const vocabTTS = useTTS({
-    audioUrl: currentVocab?.audioUrl ?? null,
-    lang: 'en-US',
-    rate: 0.85,
-  });
-
-  // TTS for example sentence
-  const sentenceTTS = useTTS({
-    lang: 'en-US',
-    rate: 0.9,
-  });
 
   // --- Loading state ---
   if (isLoading) {
