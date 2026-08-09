@@ -201,6 +201,48 @@ export default function LessonView() {
     setLastCorrect(null);
   }, [currentExercise?.id]);
 
+  const finishLesson = useCallback(async () => {
+    const totalExercises = totalExerciseCount;
+    const correctCount = Array.from(exerciseAnswers.values()).filter(
+      (v) => v === true
+    ).length;
+    const score =
+      totalExercises > 0
+        ? Math.round((correctCount / totalExercises) * 100)
+        : 0;
+
+    completeLesson(score);
+    addAuthXp(xpEarned);
+    addCoins(Math.floor(xpEarned / 10));
+
+    // Update local progress map immediately
+    const lessonId = viewParams.lessonId;
+    if (lessonId) {
+      updateProgress(lessonId, {
+        completed: true,
+        score,
+        completedAt: new Date().toISOString(),
+      });
+    }
+
+    // POST progress to API
+    try {
+      if (lessonId) {
+        await fetch('/api/progress', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            lessonId,
+            score,
+            xpEarned,
+          }),
+        });
+      }
+    } catch {
+      // Silent fail for progress reporting
+    }
+  }, [totalExerciseCount, exerciseAnswers, xpEarned, viewParams.lessonId, completeLesson, addAuthXp, addCoins, updateProgress]);
+
   const handleAnswer = useCallback(
     (correct: boolean) => {
       if (!currentExercise || answered) return;
@@ -279,48 +321,6 @@ export default function LessonView() {
       finishLesson();
     }
   }, [isVocabSection, currentVocabIndex, currentSection, allVocabulary, advanceToNext]);
-
-  const finishLesson = useCallback(async () => {
-    const totalExercises = totalExerciseCount;
-    const correctCount = Array.from(exerciseAnswers.values()).filter(
-      (v) => v === true
-    ).length;
-    const score =
-      totalExercises > 0
-        ? Math.round((correctCount / totalExercises) * 100)
-        : 0;
-
-    completeLesson(score);
-    addAuthXp(xpEarned);
-    addCoins(Math.floor(xpEarned / 10));
-
-    // Update local progress map immediately
-    const lessonId = viewParams.lessonId;
-    if (lessonId) {
-      updateProgress(lessonId, {
-        completed: true,
-        score,
-        completedAt: new Date().toISOString(),
-      });
-    }
-
-    // POST progress to API
-    try {
-      if (lessonId) {
-        await fetch('/api/progress', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            lessonId,
-            score,
-            xpEarned,
-          }),
-        });
-      }
-    } catch {
-      // Silent fail for progress reporting
-    }
-  }, [totalExerciseCount, exerciseAnswers, xpEarned, viewParams.lessonId, completeLesson, addAuthXp, addCoins, updateProgress]);
 
   const handleClose = useCallback(() => {
     if (advanceTimerRef.current) {
