@@ -205,6 +205,11 @@ export default function LessonView() {
     (correct: boolean) => {
       if (!currentExercise || answered) return;
 
+      if (advanceTimerRef.current) {
+        clearTimeout(advanceTimerRef.current);
+        advanceTimerRef.current = null;
+      }
+
       setAnswered(true);
       setLastCorrect(correct);
       setExerciseAnswer(currentExercise.id, correct);
@@ -225,9 +230,16 @@ export default function LessonView() {
       // Auto-advance on correct after 1s
       if (correct) {
         advanceTimerRef.current = setTimeout(() => {
-          const hasMore = advanceToNext();
-          if (!hasMore) {
-            finishLesson();
+          try {
+            clearTimeout(advanceTimerRef.current);
+            advanceTimerRef.current = null;
+
+            const hasMore = advanceToNext();
+            if (!hasMore) {
+              finishLesson();
+            }
+          } catch (error) {
+            console.error('Failed to auto-advance after correct answer:', error);
           }
         }, 1000);
       }
@@ -241,6 +253,7 @@ export default function LessonView() {
       gamification.hearts,
       setExerciseAnswer,
       advanceToNext,
+      finishLesson,
     ]
   );
 
